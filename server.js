@@ -7,6 +7,13 @@ const bootcamp = require('./routes/bootcamp');
 dotenv.config({ path: './config/config.env' });
 
 const app = express();
+const logger = (req, res, next) => {
+  req.hello = 'Hello world';
+  console.log('Middleware ran');
+  next();
+};
+
+app.use(logger);
 // creating rout
 app.use('/api/v1/bootcamps', bootcamp);
 
