@@ -1,4 +1,5 @@
 const Bootcamp = require('../models/Bootcamps');
+const ErrorResponse = require('../utils/errorResponse');
 
 //@desc    get all bootCamps
 //@route   GET /api/v1/bootcamps
@@ -17,10 +18,8 @@ exports.getBootcamp = async (req, res, next) => {
       success: false,
     });
   }
-  // res
-  //   .status(200)
-  //   .send({ success: true, msg: 'show alll bootcamps', hello: req.hello });
 };
+
 //@desc    get single bootCamps
 //@route   GET /api/v1/bootcamps/:id
 //@access  Public
@@ -29,24 +28,24 @@ exports.getSingleBootcamp = async (req, res, next) => {
 
   try {
     if (!getBootcamp) {
-      return res.status(400).json({
-        success: false,
-      });
+      new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404);
     }
-
     res.status(200).json({
       success: true,
       data: getBootcamp,
     });
+    console.log('try');
   } catch (error) {
-    res.status(400).json({
-      success: false,
-    });
+    // res.status(400).json({
+    //   success: false,
+    // });
+    next(
+      new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404)
+    );
+    console.log('catch');
   }
-  // res
-  //   .status(200)
-  //   .send({ success: true, msg: `showing  bootcamp ${req.params.id}` });
 };
+
 //@desc   Create bootCamps
 //@route   GET /api/v1/bootcamps
 //@access  Private
@@ -64,10 +63,8 @@ exports.postBootcamp = async (req, res, next) => {
       success: false,
     });
   }
-
-  // console.log(req.body);
-  // res.status(200).send({ success: true, msg: 'create new bootcamps' });
 };
+
 //@desc    Edit bootCamps
 //@route   GET /api/v1/bootcamps
 //@access  Private
@@ -82,22 +79,20 @@ exports.putBootcamp = async (req, res, next) => {
       return res.status(400).json({
         success: false,
       });
-    } else {
-      return res.status(201).json({
-        success: true,
-        data: bootcamp,
-      });
     }
+    res.status(201).json({
+      success: true,
+      data: bootcamp,
+    });
+
     console.log('correct');
   } catch (error) {
     res.status(400).json({
       success: false,
     });
   }
-  // res
-  //   .status(200)
-  //   .send({ success: true, msg: `update bootcamp ${req.params.id}` });
 };
+
 //@desc    Delete bootCamps
 //@route   DELETE /api/v1/bootcamps
 //@access  Private
@@ -121,7 +116,4 @@ exports.deleteBootcamp = async (req, res, next) => {
       success: false,
     });
   }
-  // res
-  //   .status(200)
-  //   .send({ success: true, msg: `delete bootcamp ${req.params.id}` });
 };
