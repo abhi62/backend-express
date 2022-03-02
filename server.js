@@ -5,6 +5,7 @@ const colors = require('colors');
 
 const bootcamp = require('./routes/bootcamp');
 const connectDb = require('./config/db');
+const errorHandler = require('./middleware/error');
 // const logger = require('./middleware/logger');
 
 //loading env
@@ -30,6 +31,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // Mount routers
 app.use('/api/v1/bootcamps', bootcamp);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
