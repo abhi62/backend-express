@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const BootCampScheme = new mongoose.schema({
+const BootCampScheme = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Please add a name'],
@@ -41,11 +41,9 @@ const BootCampScheme = new mongoose.schema({
     type: {
       type: String,
       enum: ['Point'],
-      required: true,
     },
     coordinates: {
       type: [Number],
-      required: true,
       index: '2dsphere',
     },
     formattedAddress: String,

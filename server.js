@@ -17,6 +17,9 @@ connectDb();
 
 const app = express();
 
+//Body parser
+app.use(express.json());
+
 //Dev env logger middleware
 
 if (process.env.NODE_ENV === 'development') {
@@ -38,8 +41,7 @@ const server = app.listen(PORT, () => {
 });
 
 // Hnadling global error
-
 process.on('unhandledRejection', (err, promise) => {
-  console.log(`Custom Error: ${err.message}`);
+  console.log(`Custom Error: ${err.message}`.red.bold.underline);
   server.close(() => process.exit(1));
 });
